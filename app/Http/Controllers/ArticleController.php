@@ -63,6 +63,9 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         //
+        $article->fill($request->all())->save();
+
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -71,5 +74,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+        $article->delete();
+        return redirect()->route('articles.index');
     }
 }
