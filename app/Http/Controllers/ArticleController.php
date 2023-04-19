@@ -11,6 +11,10 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct(){
+        $this->authorizeResource(Article::class,'article');
+    }
     public function index()
     {
         //
@@ -25,14 +29,19 @@ class ArticleController extends Controller
     public function create()
     {
         //
+        return view('articles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request,Article $article)
     {
         //
+        $article->fill($request->all());
+        $article->user_id = $request->user()->id;
+        $article->save();
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -41,6 +50,7 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         //
+        return view('articles.show',compact('article'));
     }
 
     /**
@@ -49,6 +59,7 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         //
+        return view('articles.edit',compact('article'));
     }
 
     /**
@@ -57,6 +68,9 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         //
+        $article->fill($request->all())->save();
+
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -65,5 +79,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+        $article->delete();
+        return redirect()->route('articles.index');
     }
 }
