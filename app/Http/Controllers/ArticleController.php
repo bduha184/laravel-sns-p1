@@ -11,6 +11,10 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct(){
+        $this->authorizeResource(Article::class,'article');
+    }
     public function index()
     {
         //
@@ -46,6 +50,7 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         //
+        return view('articles.show',compact('article'));
     }
 
     /**
