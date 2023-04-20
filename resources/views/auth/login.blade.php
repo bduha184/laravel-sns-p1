@@ -2,6 +2,7 @@
     <x-slot name="title">
         ログイン
     </x-slot>
+    @include('nav')
     <div class="container">
         <div class="row">
             <div class="mx-auto col col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
@@ -30,6 +31,9 @@
                                 {{-- ここから --}}
                                 <input type="hidden" name="remember" id="remember" value="on">
                                 {{-- ここまで --}}
+                                <div class="text-left">
+                                    <a href="{{ route('password.request') }}" class="card-text">パスワードを忘れた方</a>
+                                </div>
 
                                 <button class="btn btn-block blue-gradient mt-2 mb-2" type="submit">ログイン</button>
 
