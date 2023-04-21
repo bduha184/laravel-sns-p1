@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -23,6 +23,24 @@ class ArticleController extends Controller
         return view('articles.index',['articles'=>$articles]);
     }
 
+    public function like(Request $request,Article $article){
+        $article->likes()->detach($request->user()->id);
+        $article->likes()->attach($request->user()->id);
+        return [
+            'id'=>$article->id,
+            'countLikes'=>$article->count_likes,
+        ];
+    }
+    public function unlike(Request $request, Article $article)
+    {
+        $article->likes()->detach($request->user()->id);
+
+        return [
+            'id' => $article->id,
+            'countLikes' => $article->count_likes,
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -35,7 +53,7 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticleRequest $request,Article $article)
+    public function store(ArticleRequest $request,Article $article)
     {
         //
         $article->fill($request->all());
@@ -65,7 +83,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
         //
         $article->fill($request->all())->save();

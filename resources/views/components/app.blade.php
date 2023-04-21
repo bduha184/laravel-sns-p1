@@ -17,8 +17,10 @@
 </head>
 
 <body>
+    <div id="app">
+        {{ $slot }}
+    </div>
 
-    {{ $slot }}
     @vite(['resources/js/app.js']);
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
